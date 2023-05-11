@@ -1,0 +1,98 @@
+#!/bin/bash
+
+# Obter a data e hora atuais
+current_datetime=$(date +'%Y-%m-%d %H:%M')
+
+# Verificar se foi fornecido o nome do arquivo como argumento
+if [ -z "$1" ]; then
+    echo "Por favor, forneça o nome do arquivo como argumento."
+    exit 1
+fi
+
+# Verificar se o arquivo existe
+if [ ! -f "$1" ]; then
+    echo "Arquivo não encontrado: $1"
+    exit 1
+fi
+
+# Verificar se foram fornecidas opções
+if [ $# -lt 2 ]; then
+    echo "Por favor, forneça pelo menos uma opção válida:"
+    echo "--done"
+    echo "--status=<valor>"
+    echo "--schedule=<data>"
+    echo "--start"
+    echo "--description=<valor>"
+    echo "--note=<valor>"
+    echo "--edit"
+    exit 1
+fi
+
+# Percorrer os argumentos fornecidos
+while [[ $# -gt 1 ]]
+do
+    key="$2"
+
+    case $key in
+        --done)
+        # Substituir a linha status por "status: completed"
+        sed -i 's/^status:.*/status: completed/' "$1"
+        # Substituir a linha completion pela data e hora atual
+        sed -i "s/^completion:.*/completion: $current_datetime/" "$1"
+        shift # passar para o próximo argumento
+        ;;
+        --status=*)
+        status="${key#*=}"
+        # Atualizar o valor da linha status
+        sed -i "s/^status:.*/status: $status/" "$1"
+        # Apagar o valor da linha completion
+        sed -i "s/^completion:.*/completion: /" "$1"
+        shift # passar para o próximo argumento
+        ;;
+        --schedule=*)
+        schedule="${key#*=}"
+        # Atualizar o valor da linha scheduled
+        sed -i "s/^scheduled:.*/scheduled: $schedule/" "$1"
+        shift # passar para o próximo argumento
+        ;;
+        --start)
+        # Atualizar a linha start com a data e hora atual
+        sed -i "s/^start:.*/start: $current_datetime/" "$1"
+        shift # passar para o próximo argumento
+        ;;
+        --description=*)
+        description="${key#*=}"
+        # Atualizar o valor da linha description
+        sed -i "s/^description:.*/description: $description/" "$1"
+        shift # passar para o próximo argumento
+        ;;
+        --note=*)
+        note="${key#*=}"
+        # Adicionar a nota no final do arquivo
+        echo "" >> "$1"
+        echo "### Anotação: $current_datetime" >> "$1"
+        echo "$note" >> "$1"
+        shift # passar para o próximo argumento
+        ;;
+        --edit)
+        # Abrir o arquivo com o Kate
+        kate "$1"
+        exit 0
+        ;;
+        *)
+        # Opção desconhecida, mostrar mensagem de erro e opções válidas
+        echo "Opção inválida: $key"
+        echo "Opções válidas:"
+        echo "--done"
+        echo "--status=<valor>"
+        echo "--schedule=<data>"
+        echo "--start"
+        echo "--description=<valor>"
+        echo "--note=<valor>"
+        echo "--edit"
+        exit 1
+        ;;
+    esac
+done
+
+echo "Tarefa atualizada com sucesso!"

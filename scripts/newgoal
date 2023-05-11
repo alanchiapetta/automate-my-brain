@@ -1,0 +1,98 @@
+#!/bin/bash
+
+# Solicita ao usuário inserir a meta
+read -p "Qual a sua meta? " goal_name
+
+# Adiciona um identificador único
+id_unico=$(date +'%Y%m%d%H%M%S')
+
+# Remove os espaços e substitui pelo caractere "-"
+file_name="${id_unico}-$(echo "$goal_name" | tr ' ' '-').md"
+
+# Define o conteúdo do arquivo
+content="---
+type: goal
+created: $(date +"%Y-%m-%d - %H:%M:%S")
+tags:
+area:
+---
+
+## Objetivo
+
+Eu quero x em, dia da semana (ex. segunda-feira), data por extenso (ex. 15 de Dezembro de 2024)
+
+## Específico (S)
+
+O que fazer para alcançar o objetivo:
+Ex.: Fazer x da melhor maneira
+
+## Mensurável (M)
+
+Como saber que alcancei o objetivo:
+Ex.: Quando acontecer XYZ
+
+O que vou ver, ouvir e sentir quando alcançar o objetivo
+
+Ex.: Vou me olhar no espelho... vou sentir...
+
+## Alcançável (A)
+
+Quais os recursos internos e externos que preciso para alcançar o objetivo:
+
+Ex.: Estudar X, ser mais consistente com Y, fazer Z todos os dias.
+
+Quais obstáculos eu posso ter no caminho:
+
+Ex.: Meus pais fazendo X, eu procrastinar e fazer coisas alheias ao meu objetivo, como Y, vícios, algo da saúde debiltada.
+
+Quais soluções para eliminar cada obstáculo listado:
+
+Ex: Solução para problema X, solução para problema Y, solução para o problema Z
+
+## Relevante (R)
+
+Por que eu quero alcançar este objetivo:
+
+Ex.: Para acontecer X
+
+Alcançando este objetivo, o que mais ele pode me trazer:
+
+Ex.: Consequência X, consequência Y, consequência Z
+
+Quem será beneficiado quando eu alcançar meu objetivo:
+
+Ex.: pessoa X e por quê, pessoa Y e por quê, pessoa Z e por quê
+
+## Tempo (T)
+
+Quando eu vou começar este plano de ação:
+
+Ex.: Dia da semana, data por extenso (Segunda-feira, dia 25 de Julho de 2023)
+
+Quando eu terei alcançado este objetivo:
+
+Ex.: Dia da semana, data por extenso (Terça-feira, dia 26 de Julho de 2023)
+
+## Quando eu realmente alcancei este objetivo
+
+Ex.: Data por extenso.
+
+## Quais dificuldades que encontrei:
+
+(Escreva aqui)
+
+## O que fiz para superar essas dificuldades:
+
+(Escreva aqui)
+
+## Lições tiradas desta experiência:
+
+(escreva aqui)
+
+"
+
+# Cria o arquivo com o conteúdo predefinido
+echo "$content" > "$file_name"
+
+# Abre o arquivo com o editor padrão
+$EDITOR "$file_name"

@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# Obter a data atual
+current_date=$(date +'%Y-%m-%d')
+current_time=$(date +'%H:%M')
+weekday=$(date +'%A')
+weekday_full=$(date +'+%A-feira')
+week_number=$(date +'%V')
+month_number=$(date +'%m')
+month_name=$(date +'+%B' | sed 's/^0//')  # Remover o zero à esquerda
+quarter_number=$(date +'%q')
+semester_number=$(date +'%m' | awk '{printf int(($1-1)/6)+1}')
+year=$(date +'%Y')
+
+# Criar o nome do arquivo com a extensão .md
+filename="$current_date - $weekday_full.md"
+
+# Remover o sufixo "-feira" quando a data é sábado ou domingo
+if [ "$weekday" == "sábado" ] || [ "$weekday" == "domingo" ]; then
+    weekday_full="$weekday"
+fi
+
+# Remover o símbolo "+" do nome do arquivo
+filename=$(echo "$filename" | sed 's/+//')
+
+# Verificar se o arquivo já existe
+if [ -f "$filename" ]; then
+    echo "Arquivo do Diário já criado"
+    $EDITOR "$filename"  # Abrir o arquivo existente no $EDITOR
+else
+    # Perguntar sobre o humor
+    echo "Como está seu humor hoje?"
+    read -r humor
+
+    # Perguntar sobre o tempo
+    echo "Como está o tempo hoje?"
+    read -r forecast
+
+    # Perguntar sobre a temperatura
+    echo "Qual a temperatura lá fora? (Informe apenas números)"
+    read -r temp
+    temp="$tempº"
+
+    # Perguntar sobre o sonho
+    echo "Com o que você sonhou hoje?"
+    read -r dream
+
+    # Preencher o arquivo com os dados
+    echo "---" > "$filename"
+    echo "type: daily" >> "$filename"
+    echo "created: $current_date - $current_time" >> "$filename"
+    echo "weekday: $weekday_full" >> "$filename"
+    echo "week: $week_number" >> "$filename"
+    echo "month: $month_number - $month_name" >> "$filename"
+    echo "quarter: $quarter_number" >> "$filename"
+    echo "semester: $semester_number" >> "$filename"
+    echo "year: $year" >> "$filename"
+    echo "humor: $humor" >> "$filename"
+    echo "forecast: $forecast" >> "$filename"
+    echo "temp: $temp" >> "$filename"
+    echo "dream: $dream" >> "$filename"
+    echo "description:" >> "$filename"
+    echo "learning:" >> "$filename"
+    echo "---" >> "$filename"
+    echo "" >> "$filename"
+    echo "## O que tenho para falar hoje?" >> "$filename"
+
+    # Substituir o símbolo "+" pelo vazio no conteúdo do arquivo
+    sed -i 's/+//' "$filename"
+
+    # Imprimir a mensagem de sucesso
+    echo "Arquivo $filename criado com sucesso!"
+
+    # Abrir o arquivo no $EDITOR para edição
+    $EDITOR "$filename"
+fi

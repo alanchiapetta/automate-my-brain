@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Função para verificar se a data é igual à data atual
+function is_due_today() {
+    local due_date=$1
+    local current_date=$(date +%Y-%m-%d)
+    [[ "$due_date" == "$current_date" ]]
+}
+
+# Função recursiva para percorrer as subpastas
+function search_tasks() {
+    local folder=$1
+
+    # Loop pelos arquivos na pasta
+    for file in "$folder"/*; do
+        if [ -d "$file" ]; then  # Verifica se é uma subpasta
+            search_tasks "$file"  # Chamada recursiva para pesquisar na subpasta
+        elif [ -f "$file" ]; then  # Verifica se é um arquivo
+            content=$(cat "$file")  # Lê o conteúdo do arquivo
+
+            # Extrai o valor do campo "due:"
+            due_date=$(grep -oP "(?<=due: )\d{4}-\d{2}-\d{2}" <<< "$content")
+
+            if is_due_today "$due_date"; then
+                echo "Tarefa: $file"
+            fi
+        fi
+    done
+}
+
+# Solicitar o caminho da pasta raiz ao usuário
+read -p "Digite o caminho completo da pasta raiz: " root_folder
+
+# Verificar se o caminho da pasta raiz é válido
+if [ ! -d "$root_folder" ]; then
+    echo "O caminho da pasta raiz não é válido."
+    exit 1
+fi
+
+# Chamada inicial para pesquisar tarefas a partir da pasta raiz
+search_tasks "$root_folder"

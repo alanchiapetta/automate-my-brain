@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# Solicita ao usuário inserir o nome do projeto
+read -p "Digite o nome do projeto: " project_name
+
+# Remove os espaços e substitui pelo caractere "-"
+file_name=$(echo "$project_name" | tr ' ' '-').md
+
+# Define o conteúdo do arquivo
+content="---
+type: project
+created: $(date +"%Y-%m-%d - %H:%M:%S")
+status:
+tags:
+priority:
+date_start:
+date_deadline:
+date_conclusion:
+goal:
+principles:
+area:
+next_task:
+---
+
+## Descrição do Projeto:
+
+
+---
+
+## Material de Apoio:
+
+> Links externos e internos de tudo o que for necessário para concluir este projeto 
+
+
+--- 
+
+## Notas:
+
+> Anotações e lembretes importantes. 
+
+---
+
+## Brainstorm:
+
+> Supercaptura: Levante todas as ideias relacionadas e relevantes
+
+- 
+
+---
+
+## Organização do Projeto:
+
+> Prioridades, listas, cronogramas e quadros gerais
+
+
+---
+
+## Tarefas do Projeto:
+
+> Caso a lista esteja vazia, defina uma próxima tarefa imediatamente.
+"
+
+# Cria o arquivo com o conteúdo predefinido
+echo "$content" > "$file_name"
+
+# Abre o arquivo com o editor padrão
+$EDITOR "$file_name"
