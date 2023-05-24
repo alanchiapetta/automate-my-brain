@@ -6,18 +6,20 @@ read -p "Digite o nome da nota: " note_name
 # Adiciona um identificador único
 id_unico=$(date +'%Y%m%d%H%M%S')
 
-# Remove os espaços e substitui pelo caractere "-"
-file_name="${id_unico}-$(echo "$note_name" | tr ' ' '-').md"
+# Coloca nome o arquivo
+file_name="${id_unico} $(echo "$note_name").md"
 
 # Define o conteúdo do arquivo
 content="---
-type: fleeting
-created: $(date +"%Y-%m-%d - %H:%M:%S")
+type: note
+created: $(date +"%Y-%m-%d %H:%M:%S")
 alias:
+status: fleeting
 tags:
 ---
 
 - 
+
 ---
 
 ## Referências
