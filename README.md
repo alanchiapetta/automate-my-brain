@@ -8,14 +8,14 @@ Ter um sistema baseado em Zettelkasten idependente de qualquer aplicativo propri
 - Estrutura de pastas simples que podem ser gerenciadas pelos gerenciadores de arquivos de qualquer sistema operacional. (Linux, Windows, Mac, Android. iOS, etc.)
 
 ## Estrutura de Pastas
-.
+
 ├── 1. Fleeting
 
-├── 2. LiteratureAqui é on
+├── 2. Literature
 
 ├── 3. Permanent
 
-├── AssetsAqui é on
+├── Assets
 
 │   ├── Arquivos
 
@@ -36,20 +36,27 @@ Ter um sistema baseado em Zettelkasten idependente de qualquer aplicativo propri
 ### Explicando a estrutura de pastas
 
 ├── 1. Fleeting
+
 ├── 2. Literature
+
 ├── 3. Permanent
 
 Nessas 3 pastas ficam as notas referentes ao sistema Zettelkasten em si.
 
 ├── Assets
+
 │   ├── Arquivos
+
 │   └── Templates
 
 Em Assets/Arquivos é onde ficam os anexos (imagens, pdf, .odt, etc.) e em Assets/Templates ficam os scripts que geram os templates automáticos.
 
 ├── Journal
+
 │   ├── 1. Daily
+
 │   ├── 2. Story
+
 │   └── 3. Frame
 
 Já essas 3 pastas são a estrutura de algo que estou tentando implementar "Zettelkasten de Histórias".
@@ -61,6 +68,6 @@ Neste cenário, a pasta "1. Daily" será onde eu vou despejar tudo o que veio à
 - [x] Script template fleetingnote 
 - [x] Script template literaturenote
 - [x] Script template permanentnote
-- [  ] Script template dailynote
-- [  ] Script template storynote
-- [  ] Script template framenote
+- [ ] Script template dailynote
+- [ ] Script template storynote
+- [ ] Script template framenote
