@@ -10,16 +10,27 @@ Ter um sistema baseado em Zettelkasten idependente de qualquer aplicativo propri
 ## Estrutura de Pastas
 .
 ├── 1. Fleeting
+
 ├── 2. LiteratureAqui é on
+
 ├── 3. Permanent
+
 ├── AssetsAqui é on
+
 │   ├── Arquivos
+
 │   └── Templates
+
 ├── Exercícios de Copy
+
 ├── Journal
+
 │   ├── 1. Daily
+
 │   ├── 2. Story
+
 │   └── 3. Frame
+
 └── Projetos
 
 ### Explicando a estrutura de pastas
