@@ -1,33 +1,35 @@
 #!/bin/bash
 
-# Solicita ao usuário inserir o nome da nota
-read -p "Digite o nome da nota: " note_name
+# Solicita ao usuário inserir o nome da Permanent Note
+read -p "Digite o titulo da Permanent Note: " note_name
 
 # Adiciona um identificador único
 id_unico=$(date +'%Y%m%d%H%M%S')
 
-# Coloca nome o arquivo
+# Define o nome do arquivo
 file_name="${id_unico} $(echo "$note_name").md"
 
-# Define o conteúdo do arquivo
+# Insere o conteúdo do Template no arquivo
 content="---
 type: note
 created: $(date +"%Y-%m-%d %H:%M:%S")
 alias:
-status: fleeting
+status: permanent
 tags:
 ---
 
-- 
-
+ 
 ---
 
 ## Referências
 
-1. 
+### Baseada na Nota de Literatura:
+- 
+
+### Notas relacionadas:
 "
 
-# Cria o arquivo com o conteúdo predefinido
+# Cria o arquivo com o Template pré-definido
 echo "$content" > "$file_name"
 
 # Abre o arquivo com o editor padrão

@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Solicita ao usuário inserir o nome da Fleeting Note
+read -p "Digite o titulo da Fleeting Note: " note_name
+
+# Adiciona um identificador único
+id_unico=$(date +'%Y%m%d%H%M%S')
+
+# Define o nome do arquivo
+file_name="${id_unico} $(echo "$note_name").md"
+
+# Insere o conteúdo do Template no arquivo
+content="---
+type: note
+created: $(date +"%Y-%m-%d %H:%M:%S")
+status: fleeting
+reading_status: [next, reading, waiting, done]
+---
+
+-
+---
+
+## Referência
+
+1.
+"
+
+# Cria o arquivo com o Template pré-definido
+echo "$content" > "$file_name"
+
+# Abre o arquivo com o editor padrão
+$EDITOR "$file_name"
